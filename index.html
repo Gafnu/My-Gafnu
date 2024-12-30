@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Theme with 3D Effects</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            background: linear-gradient(to bottom, #ff9a9e, #fad0c4, #fbc2eb);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            position: relative;
+            perspective: 1000px;
+        }
+
+        h1 {
+            font-size: 5vw; /* Adjusted for mobile */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 5vh; /* Adjusted for mobile */
+            transform: rotateX(15deg) rotateY(-10deg);
+            animation: rotate3D 5s infinite alternate ease-in-out;
+        }
+
+        p {
+            font-size: 3vw; /* Adjusted for mobile */
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            transform: translateZ(30px);
+            margin-bottom: 10vh; /* Adjusted for mobile */
+        }
+
+        .hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            top: 0;
+            left: 0;
+        }
+
+        .heart {
+            position: absolute;
+            width: 15px; /* Smaller size for mobile */
+            height: 15px; /* Smaller size for mobile */
+            background: #ff6b6b;
+            transform: rotate(45deg);
+            animation: float 5s infinite ease-in-out;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: #ff6b6b;
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            top: -7.5px;
+            left: 0;
+        }
+
+        .heart::after {
+            left: 7.5px;
+            top: 0;
+        }
+
+        .top-button {
+            position: fixed;
+            top: 80vh; /* Adjusted for mobile */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            padding: 8px 15px; /* Smaller size for mobile */
+            background-color: pink;
+            color: #D5006D;
+            border: 4px inset  #D5006D;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .top-button:hover {
+            background-color: #ff4a4a;
+            color: white;
+        }
+
+        .love-note {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.6);
+            padding: 15px; /* Adjusted padding */
+            border-radius: 50px;
+            font-size: 3vw; /* Adjusted for mobile */
+            color: #D5006D;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            animation: bubble 7s infinite;
+            font-family: 'Arial', sans-serif;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        @keyframes rotate3D {
+            0% {
+                transform: rotateX(15deg) rotateY(-10deg);
+            }
+            100% {
+                transform: rotateX(-15deg) rotateY(10deg);
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(45deg);
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-200px) rotate(45deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes bubble {
+            0% {
+                transform: translateY(-100vh);
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+
+        /* Heart Blast Effect */
+        @keyframes heart-blast {
+            0% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+                background: rgba(255, 105, 180, 0.8);
+            }
+            50% {
+                transform: scale(2) rotate(45deg);
+                opacity: 0.7;
+                background: rgba(255, 105, 180, 0.6);
+            }
+            100% {
+                transform: scale(0) rotate(90deg);
+                opacity: 0;
+                background: rgba(255, 105, 180, 0.4);
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="hearts"></div>
+    <h1>Love Is in the Air</h1>
+    <p>Experience the magic of love!</p>
+
+    <!-- "Go Ahead" button linking to another page -->
+    <button class="top-button" id="goButton" onclick="window.location.href='login.html'">Go Ahead</button>
+
+    <script>
+        const heartsContainer = document.body;
+        const messages = [
+            "You are my sunshine!",
+            "Forever and always!",
+            "I love you to the moon and back!",
+            "You make my heart skip a beat!",
+            "Together is our favorite place to be!",
+            "Love you more than words can say!",
+            "You complete me!",
+            "I’m so grateful to have you!",
+            "Every moment with you is precious!",
+            "You are my heart’s desire!"
+        ];
+
+        // Create heart animations
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = Math.random() * 2 + 3 + "s";
+            heartsContainer.appendChild(heart);
+
+            setTimeout(() => heart.remove(), 5000);
+        }
+
+        setInterval(createHeart, 300);
+
+        // Create love note bubbles (downward)
+        function createLoveNote() {
+            const loveNote = document.createElement('div');
+            loveNote.classList.add('love-note');
+            loveNote.innerText = messages[Math.floor(Math.random() * messages.length)];
+            loveNote.style.left = Math.random() * 100 + "vw";
+            loveNote.style.top = "-10vh";  // Start from top
+            loveNote.style.animationDuration = Math.random() * 2 + 6 + "s";
+            heartsContainer.appendChild(loveNote);
+
+            // Add the heart-blast effect on click
+            loveNote.addEventListener('click', function() {
+                loveNote.style.animation = 'heart-blast 0.6s forwards';
+                setTimeout(() => loveNote.remove(), 600);  // Remove after animation
+            });
+
+            setTimeout(() => loveNote.remove(), 8000); // Remove after 8 seconds
+        }
+
+        setInterval(createLoveNote, 5000); // Create new love notes every 5 seconds
+    </script>
+</body>
+</html>
